@@ -13,7 +13,7 @@ public class Producto
         Console.WriteLine("********** DATOS DEL PRODUCTO **********");
         Console.WriteLine($"ID: {Id}");
         Console.WriteLine($"Nombre: {Nombre}");
-        Console.WriteLine($"Precio: {Precio}");
+        Console.WriteLine($"Precio: {Precio:C}");
         Console.WriteLine($"Cantidad disponible: {Stock}");
         Console.WriteLine();
     }
