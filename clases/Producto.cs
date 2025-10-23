@@ -8,14 +8,13 @@ public class Producto
     /// <summary>
     /// Muestra la informacion del producto
     /// </summary>
-    public void MostrarInformacion()
+    public virtual void MostrarInformacion()
     {
         Console.WriteLine("********** DATOS DEL PRODUCTO **********");
         Console.WriteLine($"ID: {Id}");
         Console.WriteLine($"Nombre: {Nombre}");
         Console.WriteLine($"Precio: {Precio:C}");
         Console.WriteLine($"Cantidad disponible: {Stock}");
-        Console.WriteLine();
     }
 
     /// <summary>
