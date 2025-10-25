@@ -7,7 +7,11 @@ public class Libro : Producto
 
     public override void MostrarInformacion()
     {
-        base.MostrarInformacion();
+        Console.WriteLine("********** DATOS DEL PRODUCTO **********");
+        Console.WriteLine($"ID: {Id}");
+        Console.WriteLine($"Nombre: {Nombre}");
+        Console.WriteLine($"Precio: {Precio:C}");
+        Console.WriteLine($"Cantidad disponible: {Stock}");
         Console.WriteLine($"ISBN: {ISBN}");
         Console.WriteLine($"Autor: {Autor}");
         Console.WriteLine($"Numero de Páginas: {NumeroPaginas}");
