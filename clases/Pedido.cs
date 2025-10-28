@@ -1,7 +1,7 @@
 
 using System.Collections.ObjectModel;
 
-public class Pedido
+public class Pedido : IInformacionDetallada
 {
     public int Id { get; set; }
     public DateTime Fecha => DateTime.Now;
@@ -34,8 +34,7 @@ public class Pedido
     public void MostrarDetalles()
     {
         Console.WriteLine("------------------------------");
-        Console.WriteLine($"Detalles del Pedido #{Id}");
-        Console.WriteLine($"Fecha: {Fecha:dd/MM/yyyy hh:mm:ss tt}");
+        Console.WriteLine(ObtenerInformacionDetallada());
 
         foreach (var item in Items)
         {
@@ -44,5 +43,11 @@ public class Pedido
         Console.WriteLine($"Total: {Total:C}");
         Console.WriteLine("------------------------------");
         Console.WriteLine();
+    }
+
+    public string ObtenerInformacionDetallada()
+    {
+        return $"Detalles del Pedido #{Id}\n" +
+               $"Fecha: {Fecha:dd/MM/yyyy hh:mm:ss tt}";
     }
 }
