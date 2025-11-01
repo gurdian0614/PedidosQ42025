@@ -7,7 +7,7 @@ electronico.Precio = 52000;
 electronico.Stock = 10;
 electronico.GarantiaMeses = 12;
 electronico.Voltaje = "110V";
-electronico.MostrarInformacion();
+electronico.MostrarInformacion("San Pedro Sula");
 
 Pedido pedido = new Pedido(1);
 pedido.AgregarItem(electronico, 1);
@@ -23,7 +23,7 @@ libro.Stock = 1500;
 libro.ISBN = "8536492365322";
 libro.Autor = "Antoine de Saint-Exupéry";
 libro.NumeroPaginas = 170;
-libro.MostrarInformacion();
+libro.MostrarInformacion("Tegucigalpa", "0801199900321");
 
 Pedido pedido1 = new Pedido(1);
 pedido1.AgregarItem(libro, 1);

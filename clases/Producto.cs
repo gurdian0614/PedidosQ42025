@@ -7,10 +7,22 @@ public abstract class Producto : IInformacionDetallada
     public decimal Precio { get; set; }
     public int Stock { get; set; }
 
+    public Producto() { }
+
+    public Producto(int Id, string Nombre, decimal Precio)
+    {
+        this.Id = Id;
+        this.Nombre = Nombre;
+        this.Precio = Precio;
+        Stock = 0;
+    }
+
     /// <summary>
     /// Muestra la informacion del producto
     /// </summary>
     public abstract void MostrarInformacion();
+    public abstract void MostrarInformacion(string Direccion);
+    public abstract void MostrarInformacion(string Direccion, string Dni);
 
     /// <summary>
     /// Disminuye el inventario
