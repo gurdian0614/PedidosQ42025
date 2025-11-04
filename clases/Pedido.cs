@@ -17,18 +17,21 @@ public class Pedido : IInformacionDetallada
 
     public void AgregarItem(Producto Producto, int Cantidad)
     {
-        if (Producto.Stock >= Cantidad)
+        if (Producto is null)
         {
-            // Agregar elementos a la lista
-            Items.Add(new ItemPedido(Producto, Cantidad));
-            Producto.DisminuirStock(Cantidad);
-            Console.WriteLine($"El Producto {Producto.Nombre} con cantidad {Cantidad}, se ha agregado al Pedido");
-            Console.WriteLine();
+            throw new ArgumentException("El producto no puede ser nulo.");
         }
-        else
+
+        if (Producto.Stock < Cantidad)
         {
-            Console.WriteLine($"No hay suficiente stock de {Producto.Nombre}");
+            throw new InvalidOperationException($"No hay suficiente stock de {Producto.Nombre}");
         }
+
+        // Agregar elementos a la lista
+        Items.Add(new ItemPedido(Producto, Cantidad));
+        Producto.DisminuirStock(Cantidad);
+        Console.WriteLine($"El Producto {Producto.Nombre} con cantidad {Cantidad}, se ha agregado al Pedido");
+        Console.WriteLine();
     }
     
     public void MostrarDetalles()

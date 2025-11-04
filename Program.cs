@@ -1,5 +1,6 @@
 ﻿
 // Creamos el objeto
+List<Producto> catalogoList = new List<Producto>();
 Electronico electronico = new Electronico();
 electronico.Id = 3;
 electronico.Nombre = "iPhone 17 Pro Max";
@@ -7,13 +8,7 @@ electronico.Precio = 52000;
 electronico.Stock = 10;
 electronico.GarantiaMeses = 12;
 electronico.Voltaje = "110V";
-electronico.MostrarInformacion("San Pedro Sula");
-
-Pedido pedido = new Pedido(1);
-pedido.AgregarItem(electronico, 1);
-pedido.AgregarItem(electronico, 5);
-
-electronico.MostrarInformacion();
+catalogoList.Add(electronico);
 
 Libro libro = new Libro();
 libro.Id = 4;
@@ -23,10 +18,70 @@ libro.Stock = 1500;
 libro.ISBN = "8536492365322";
 libro.Autor = "Antoine de Saint-Exupéry";
 libro.NumeroPaginas = 170;
-libro.MostrarInformacion("Tegucigalpa", "0801199900321");
+catalogoList.Add(libro);
 
-Pedido pedido1 = new Pedido(1);
-pedido1.AgregarItem(libro, 1);
-pedido1.AgregarItem(libro, 5);
+Pedido pedido = new Pedido(1);
+bool continuarPedido = true;
 
-libro.MostrarInformacion();
+while (continuarPedido)
+{
+    Console.WriteLine("-------------------- Catálogo de Productos --------------------");
+    foreach (Producto producto in catalogoList)
+    {
+        producto.MostrarInformacion();
+    }
+
+    try
+    {
+        Console.WriteLine();
+        Console.WriteLine("------------------------------------------------------------");
+        Console.Write("Ingrese ID del producto o 0 para finalizar: ");
+        int id = int.Parse(Console.ReadLine());
+
+        if (id == 0)
+        {
+            continuarPedido = false;
+            continue;
+        }
+
+        Console.Write("Ingrese la cantidad: ");
+        int cantidad = int.Parse(Console.ReadLine());
+
+        Producto productoSeleccionado = catalogoList.FirstOrDefault(producto => producto.Id == id);
+        if (productoSeleccionado is null)
+        {
+            throw new ArgumentException($"El Id {id} no corresponde a ningún producto.");
+        }
+        pedido.AgregarItem(productoSeleccionado, cantidad);
+    }
+    catch (ArgumentException ex)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"ADVERTENCIA: {ex.Message}");
+        Console.ResetColor();
+    }
+    catch (InvalidOperationException ex)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"ATENCION: {ex.Message}");
+        Console.ResetColor();
+    }
+    catch (FormatException)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("ADVERTENCIA: Por favor ingrese solo números para el Id y la Cantidad.");
+        Console.ResetColor();
+    }
+    catch (Exception ex)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"ERROR INESPERADO: {ex.Message}");
+        Console.ResetColor();
+    }
+    finally
+    {
+        Console.WriteLine();
+        Console.WriteLine($"-------------------- ESTADO ACTUAL DEL PEDIDO --------------------");
+        pedido.MostrarDetalles();
+    }
+}
