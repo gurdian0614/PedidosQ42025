@@ -1,6 +1,6 @@
 ﻿
 // Creamos el objeto
-List<Producto> catalogoList = new List<Producto>();
+Dictionary<int, Producto> catalogo = new Dictionary<int, Producto>();
 Electronico electronico = new Electronico();
 electronico.Id = 3;
 electronico.Nombre = "iPhone 17 Pro Max";
@@ -8,7 +8,7 @@ electronico.Precio = 52000;
 electronico.Stock = 10;
 electronico.GarantiaMeses = 12;
 electronico.Voltaje = "110V";
-catalogoList.Add(electronico);
+catalogo.Add(electronico.Id, electronico);
 
 Libro libro = new Libro();
 libro.Id = 4;
@@ -18,7 +18,7 @@ libro.Stock = 1500;
 libro.ISBN = "8536492365322";
 libro.Autor = "Antoine de Saint-Exupéry";
 libro.NumeroPaginas = 170;
-catalogoList.Add(libro);
+catalogo.Add(libro.Id, libro);
 
 Pedido pedido = new Pedido(1);
 bool continuarPedido = true;
@@ -26,7 +26,7 @@ bool continuarPedido = true;
 while (continuarPedido)
 {
     Console.WriteLine("-------------------- Catálogo de Productos --------------------");
-    foreach (Producto producto in catalogoList)
+    foreach (Producto producto in catalogo.Values)
     {
         producto.MostrarInformacion();
     }
@@ -47,12 +47,11 @@ while (continuarPedido)
         Console.Write("Ingrese la cantidad: ");
         int cantidad = int.Parse(Console.ReadLine());
 
-        Producto productoSeleccionado = catalogoList.FirstOrDefault(producto => producto.Id == id);
-        if (productoSeleccionado is null)
+        if (!catalogo.TryGetValue(id, out Producto? p))
         {
             throw new ArgumentException($"El Id {id} no corresponde a ningún producto.");
         }
-        pedido.AgregarItem(productoSeleccionado, cantidad);
+        pedido.AgregarItem(catalogo[id], cantidad);
     }
     catch (ArgumentException ex)
     {
